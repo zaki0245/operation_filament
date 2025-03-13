@@ -25,6 +25,8 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\OperationResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\OperationResource\RelationManagers;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 class OperationResource extends Resource
 {
@@ -55,15 +57,15 @@ class OperationResource extends Resource
                         TextInput::make('AGENT_POL')->label('Agent POL'),
                         TextInput::make('PIC_POL')->label('PIC POL'),
                         TextInput::make('CONTACT_AGENT_POL')->label('Contact Agent POL'),
-                        DateTimePicker::make('ETA_POL')->label('ETA POL'),
-                        DateTimePicker::make('TA_POL')->label('TA POL'),
-                        DateTimePicker::make('TB_POL')->label('TB POL'),
-                        DateTimePicker::make('SL')->label('Start Loading'),
-                        DateTimePicker::make('CL')->label('Completed Loading'),
-                        DateTimePicker::make('CO_POL')->label('Cast Off POL'),
-                        DateTimePicker::make('TD_POL')->label('TD POL'),
+                        DateTimePicker::make('ETA_POL')->label('ETA POL')->withoutSeconds(),
+                        DateTimePicker::make('TA_POL')->label('TA POL')->withoutSeconds(),
+                        DateTimePicker::make('TB_POL')->label('TB POL')->withoutSeconds(),
+                        DateTimePicker::make('SL')->label('Start Loading')->withoutSeconds(),
+                        DateTimePicker::make('CL')->label('Completed Loading')->withoutSeconds(),
+                        DateTimePicker::make('CO_POL')->label('Cast Off POL')->withoutSeconds(),
+                        DateTimePicker::make('TD_POL')->label('TD POL')->withoutSeconds(),
                         TextInput::make('DS_POL')->label('Draft Survey POL')->numeric(),
-                    ])->columns(2),
+                    ]),
 
                 Card::make()
                     ->schema([
@@ -71,15 +73,15 @@ class OperationResource extends Resource
                         TextInput::make('AGENT_POD')->label('Agent POD'),
                         TextInput::make('PIC_POD')->label('PIC POD'),
                         TextInput::make('CONTACT_AGENT_POD')->label('Contact Agent POD'),
-                        DateTimePicker::make('ETA_POD')->label('ETA POD'),
-                        DateTimePicker::make('TA_POD')->label('TA POD'),
-                        DateTimePicker::make('TB_POD')->label('TB POD'),
-                        DateTimePicker::make('SD')->label('Start Discharging'),
-                        DateTimePicker::make('CD')->label('Completed Discharging'),
-                        DateTimePicker::make('CO_POD')->label('Cast Off POD'),
-                        DateTimePicker::make('TD_POD')->label('TD POD'),
+                        DateTimePicker::make('ETA_POD')->label('ETA POD')->withoutSeconds(),
+                        DateTimePicker::make('TA_POD')->label('TA POD')->withoutSeconds(),
+                        DateTimePicker::make('TB_POD')->label('TB POD')->withoutSeconds(),
+                        DateTimePicker::make('SD')->label('Start Discharging')->withoutSeconds(),
+                        DateTimePicker::make('CD')->label('Completed Discharging')->withoutSeconds(),
+                        DateTimePicker::make('CO_POD')->label('Cast Off POD')->withoutSeconds(),
+                        DateTimePicker::make('TD_POD')->label('TD POD')->withoutSeconds(),
                         TextInput::make('DS_POD')->label('Draft Survey POD')->numeric(),
-                    ])->columns(2),
+                    ]),
 
                 Card::make()
                     ->schema([
@@ -88,6 +90,7 @@ class OperationResource extends Resource
                     ])->columns(2),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -136,4 +139,70 @@ class OperationResource extends Resource
             'edit' => Pages\EditOperation::route('/{record}/edit'),
         ];
     }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('NOMINATION')
+                    ->schema([
+                        TextEntry::make('TB')->label('Tug Boat')->prefix(': '),
+                        TextEntry::make('BG')->label('Barge')->prefix(': '),
+                        TextEntry::make('VOY')->label('Voyage')->prefix(': '),
+                        TextEntry::make('BARGES_OWNERS_OPERATOR')->label('Barges Owners/Operator')->prefix(': '),
+                        TextEntry::make('SHIPPER')->label('Shipper')->prefix(': '),
+                        TextEntry::make('COMODITIES')->label('Commodities')->prefix(': '),
+                        TextEntry::make('CONTACT_MASTER_CAPTAIN')->label('Contact Master Captain')->prefix(': '),
+                        TextEntry::make('LAYCAN')->label('Laycan')->prefix(': '),
+                    ])->columns(2),
+
+                Section::make('POL')
+                    ->schema([
+                        TextEntry::make('POL')->label('Port of Loading')->prefix(': '),
+                        TextEntry::make('AGENT_POL')->label('Agent POL')->prefix(': '),
+                        TextEntry::make('PIC_POL')->label('PIC POL')->prefix(': '),
+                        TextEntry::make('CONTACT_AGENT_POL')->label('Contact Agent POL')->prefix(': '),
+                        TextEntry::make('ETA_POL')->label('ETA POL')->prefix(': '),
+                        TextEntry::make('TA_POL')->label('TA POL')->prefix(': '),
+                        TextEntry::make('TB_POL')->label('TB POL')->prefix(': '),
+                        TextEntry::make('SL')->label('Start Loading')->prefix(': '),
+                        TextEntry::make('CL')->label('Completed Loading')->prefix(': '),
+                        TextEntry::make('CO_POL')->label('Cast Off POL')->prefix(': '),
+                        TextEntry::make('TD_POL')->label('TD POL')->prefix(': '),
+                        TextEntry::make('DS_POL')->label('Draft Survey POL')->prefix(': '),
+                    ]),
+
+                Section::make('POD')
+                    ->schema([
+                        TextEntry::make('POD')->label('Port of Discharge')->prefix(': '),
+                        TextEntry::make('AGENT_POD')->label('Agent POD')->prefix(': '),
+                        TextEntry::make('PIC_POD')->label('PIC POD')->prefix(': '),
+                        TextEntry::make('CONTACT_AGENT_POD')->label('Contact Agent POD')->prefix(': '),
+                        TextEntry::make('ETA_POD')->label('ETA POD')->prefix(': '),
+                        TextEntry::make('TA_POD')->label('TA POD')->prefix(': '),
+                        TextEntry::make('TB_POD')->label('TB POD')->prefix(': '),
+                        TextEntry::make('SD')->label('Start Discharging')->prefix(': '),
+                        TextEntry::make('CD')->label('Completed Discharging')->prefix(': '),
+                        TextEntry::make('CO_POD')->label('Cast Off POD')->prefix(': '),
+                        TextEntry::make('TD_POD')->label('TD POD')->prefix(': '),
+                        TextEntry::make('DS_POD')->label('Draft Survey POD')->prefix(': '),
+                    ]),
+
+                Section::make('ESTIMATED')
+                    ->schema([
+                        TextEntry::make('LAYTIME_POL')->label('Laytime POL')->prefix(': '),
+                        TextEntry::make('LAYTIME_POD')->label('Laytime POD')->prefix(': '),
+                        TextEntry::make('TOTAL_LAYTIME')->label('Total Laytime')->prefix(': '),
+                        TextEntry::make('LAYTIME_ALLOWED')->label('Laytime Allowed')->prefix(': '),
+                        TextEntry::make('DEMURRAGE_DESPATCH')->label('Demurrage/Despatch')->prefix(': '),
+                    ])->columns(2),
+
+                Section::make('POSITION & STATUS')
+                    ->schema([
+                        TextEntry::make('POSITION')->label('Position')->prefix(': '),
+                        TextEntry::make('REMARKS_STATUS')->label('Remarks Status')->prefix(': '),
+                    ])->columns(2),
+            ]);
+    }
+
 }
